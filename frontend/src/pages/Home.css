@@ -1,0 +1,269 @@
+/* src/pages/Home.css */
+
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.hero-section {
+  background: url('https://image.freepik.com/psd-gratuitas/arranjo-de-servico-de-comida-gratis-lay-plana-com-mock-up-de-fundo_23-2148421300.jpg'); /* banner image */
+  background-repeat:no-repeat ;
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.hero-content {
+  z-index: 1;
+  position: relative;
+}
+
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.order-now-btn {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.order-now-btn:hover {
+  background-color: #ff5252;
+  transform: translateY(-2px);
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  color: #333;
+}
+
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.category-btn {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  color:black;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.category-btn:hover, .category-btn.active {
+  background-color: #ff6b6b;
+  color: rgb(255, 255, 255);
+  border-color: #ff6b6b;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.food-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.food-card:hover {
+  transform: translateY(-10px);
+}
+
+.popular-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ff6b6b;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  z-index: 1;
+}
+
+.food-image-container {
+  height: 200px;
+  overflow: hidden;
+}
+
+.food-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.food-card:hover .food-image {
+  transform: scale(1.1);
+}
+
+.food-details {
+  padding: 20px;
+}
+
+.food-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.food-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.food-rating {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.star-icon {
+  color: #ffc107;
+  margin-right: 5px;
+}
+
+.food-description {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.food-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.food-price {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.add-to-cart-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #218838;
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+
+.spinner-icon {
+  animation: spin 1s linear infinite;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #ff6b6b;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.features-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin: 50px 0;
+}
+
+.feature-card {
+  text-align: center;
+  padding: 30px 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.feature-card h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.feature-card p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    height: 300px;
+  }
+  
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  
+  .food-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}

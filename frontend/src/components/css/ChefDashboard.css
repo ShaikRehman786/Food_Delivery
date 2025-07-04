@@ -1,0 +1,151 @@
+.chef-dashboard {
+  padding: 30px 20px;
+  max-width: 1000px;
+  margin: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2, h3 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.add-food-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.add-food-form input,
+.add-food-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.add-food-form input:focus,
+.add-food-form textarea:focus {
+  border-color: #007bff;
+}
+
+.add-food-form button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.add-food-form button:hover {
+  background-color: #0056b3;
+}
+
+.food-list {
+  margin-top: 40px;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.food-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 15px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.food-card:hover {
+  transform: scale(1.02);
+}
+
+.food-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.food-card h4 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+  color: #222;
+}
+
+.food-card p {
+  margin: 5px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.food-card strong {
+  color: #000;
+}
+
+.food-card button {
+  margin: 5px 5px 0;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.food-card button:first-of-type {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.food-card button:first-of-type:hover {
+  background-color: #e0a800;
+}
+
+.food-card button:last-of-type {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.food-card button:last-of-type:hover {
+  background-color: #b52a37;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .add-food-form {
+    padding: 15px;
+  }
+
+  .food-card {
+    padding: 10px;
+  }
+
+  .add-food-form input,
+  .add-food-form textarea {
+    font-size: 14px;
+  }
+
+  .add-food-form button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .food-card h4 {
+    font-size: 16px;
+  }
+}
