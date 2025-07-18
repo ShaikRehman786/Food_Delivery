@@ -1,7 +1,7 @@
 // src/api/otpApi.js
 import axios from 'axios';
 
-const BASE_URL = 'https://food-backend-xs3y.onrender.com';
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const sendOtp = async (email) => {
   return await axios.post(`${BASE_URL}/api/otp/send`, { email });
