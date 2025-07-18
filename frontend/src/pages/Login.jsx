@@ -4,14 +4,16 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Login.css';
-import { useUser } from '../components/UserContext'; // ✅ Import the context
+import { useUser } from '../components/UserContext';
 
-function Login() {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { login } = useUser(); // ✅ Get the login function from context
+  const { login } = useUser();
+
+  const backendBaseUrl = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     toast.dismiss();
@@ -23,15 +25,15 @@ function Login() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('https://food-backend-xs3y.onrender.com/api/auth/login', {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${backendBaseUrl}/api/auth/login`,
+        { email, password }
+      );
 
       const { otpToken, username } = response.data;
 
       if (username) {
-        login(username); // ✅ Set the username in context
+        login(username);
       }
 
       if (otpToken) {
@@ -90,6 +92,6 @@ function Login() {
       </div>
     </div>
   );
-}
+};
 
 export default Login;
