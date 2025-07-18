@@ -9,13 +9,15 @@ const Home = () => {
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState('all');
 
+  const backendBaseUrl = process.env.REACT_APP_BACKEND_URL;
+
   const dummyFoods = [ /* your dummy foods remain unchanged */ ];
   const dummyCategories = [ /* your dummy categories remain unchanged */ ];
 
   useEffect(() => {
     const fetchFoods = async () => {
       try {
-        const res = await axios.get('https://food-backend-xs3y.onrender.com/api/foods');
+        const res = await axios.get(`${backendBaseUrl}/api/foods`);
         setFoods(res.data);
 
         const uniqueCategories = [...new Set(res.data.map(item => item.category.toLowerCase()))];
@@ -34,7 +36,7 @@ const Home = () => {
     };
 
     fetchFoods();
-  }, []);
+  }, [backendBaseUrl]);
 
   const addToCart = (food) => {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
