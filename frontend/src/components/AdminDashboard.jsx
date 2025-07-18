@@ -4,7 +4,8 @@ import './css/AdminDashboard.css';
 import { toast } from 'react-toastify';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const API_BASE = 'http://localhost:5000';
+const API_BASE = 'https://food-backend-xs3y.onrender.com';
+
 
 const AdminDashboard = () => {
   const [foods, setFoods] = useState([]);
