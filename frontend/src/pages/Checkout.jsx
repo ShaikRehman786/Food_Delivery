@@ -38,7 +38,7 @@ const Checkout = () => {
 
     try {
       const { data: order } = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/payment/create-order`,
+        `https://food-backend-xs3y.onrender.com/api/payment/create-order`,
         { amount: amount * 100 }
       );
 
@@ -51,8 +51,6 @@ const Checkout = () => {
         order_id: order.id,
         handler: function (response) {
           setSuccessMessage(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
-          // Optionally navigate to success page after a delay
-          // setTimeout(() => navigate('/order-success'), 3000);
         },
         prefill: {
           name: 'Test User',
@@ -73,8 +71,6 @@ const Checkout = () => {
 
   const handleCashOnDelivery = () => {
     setSuccessMessage('Order placed successfully with Cash on Delivery!');
-    // Optionally navigate after delay
-    // setTimeout(() => navigate('/order-success'), 3000);
   };
 
   const handlePayment = () => {
