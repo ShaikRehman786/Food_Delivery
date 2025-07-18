@@ -21,12 +21,11 @@ const RazorpayCheckout = ({ amount }) => {
       return;
     }
 
-    // 1. Create order on backend
-    const { data: order } = await axios.post('http://localhost:5000/api/payment/create-order', {
+    // ✅ UPDATED BACKEND API URL
+    const { data: order } = await axios.post('https://food-backend-xs3y.onrender.com/api/payment/create-order', {
       amount: amount, // in INR
     });
 
-    // 2. Configure Razorpay options
     const options = {
       key: process.env.REACT_APP_RAZORPAY_KEY_ID,
       amount: order.amount,
@@ -35,7 +34,6 @@ const RazorpayCheckout = ({ amount }) => {
       description: 'Test Transaction',
       order_id: order.id,
       handler: function (response) {
-        // Handle successful payment here
         console.log('Payment Success:', response);
         alert(`Payment Successful. Payment ID: ${response.razorpay_payment_id}`);
       },
