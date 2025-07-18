@@ -15,6 +15,8 @@ function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  const backendBaseUrl = process.env.REACT_APP_BACKEND_URL;
+
   const handleSignup = async (e) => {
     e.preventDefault();
 
@@ -26,31 +28,18 @@ function Signup() {
     setIsLoading(true);
 
     try {
-      // Step 1: Register the user
-const registerResponse = await axios.post('http://localhost:5000/api/auth/register', {
-  name,
-  email,
-  password,
-  role,
-});
+      const registerResponse = await axios.post(`${backendBaseUrl}/api/auth/register`, {
+        name,
+        email,
+        password,
+        role,
+      });
 
-toast.success('Registration successful! OTP sent to your email.');
-
-const { otpToken } = registerResponse.data;
-
-if (otpToken) {
-  navigate('/verify-otp', { state: { otpToken, email, from: 'register' } });
-} else {
-  toast.error('Failed to get OTP token.');
-}
-
+      const { otpToken } = registerResponse.data;
 
       if (otpToken) {
-        toast.success('OTP sent to your email.');
-
-        setTimeout(() => {
-          navigate('/verify-otp', { state: { otpToken, email, from: 'register' } });
-        }, 1500);
+        toast.success('Registration successful! OTP sent to your email.');
+        navigate('/verify-otp', { state: { otpToken, email, from: 'register' } });
       } else {
         toast.error('Failed to get OTP token.');
       }
@@ -101,7 +90,6 @@ if (otpToken) {
             <select value={role} onChange={(e) => setRole(e.target.value)} required>
               <option value="user">User</option>
               <option value="chef">Chef</option>
-              {/* <option value="admin">Admin</option> */}
             </select>
           </div>
 
