@@ -9,6 +9,8 @@ const Checkout = () => {
   const amount = location.state?.amount;
 
   const razorpayKey = process.env.REACT_APP_RAZORPAY_KEY_ID;
+  const backendBaseUrl = process.env.REACT_APP_BACKEND_URL;
+
   const [paymentMethod, setPaymentMethod] = useState('razorpay');
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -38,7 +40,7 @@ const Checkout = () => {
 
     try {
       const { data: order } = await axios.post(
-        `https://food-backend-xs3y.onrender.com/api/payment/create-order`,
+        `${backendBaseUrl}/api/payment/create-order`,
         { amount: amount * 100 }
       );
 
