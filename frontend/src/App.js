@@ -18,6 +18,8 @@ import Navbar from './pages/Navbar';
 import Home from './pages/Home';
 import VerifyOtp from './pages/VerifyOtp';
 import Checkout from './pages/Checkout';
+import { Navigate } from 'react-router-dom';
+
 
 import { UserProvider } from './components/UserContext';  // <-- import your UserProvider
 
@@ -29,6 +31,7 @@ function App() {
         <ToastContainer position="top-center" autoClose={3000} />
 
         <Routes>
+          <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
