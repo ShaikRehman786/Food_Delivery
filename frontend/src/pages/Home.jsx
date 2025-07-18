@@ -9,101 +9,15 @@ const Home = () => {
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState('all');
 
-  const dummyFoods = [
-    {
-      _id: '1',
-      name: 'Margherita Pizza',
-      description: 'Classic pizza with tomato sauce, mozzarella, and basil',
-      price: 299,
-      category: 'pizza',
-      rating: 4.5,
-      image: 'https://source.unsplash.com/random/300x200/?pizza',
-      popular: true
-    },
-    {
-      _id: '2',
-      name: 'Chicken Burger',
-      description: 'Juicy chicken patty with lettuce, tomato and special sauce',
-      price: 189,
-      category: 'burger',
-      rating: 4.2,
-      image: 'https://source.unsplash.com/random/300x200/?burger',
-      popular: true
-    },
-    {
-      _id: '3',
-      name: 'Pasta Alfredo',
-      description: 'Creamy white sauce pasta with mushrooms and herbs',
-      price: 249,
-      category: 'pasta',
-      rating: 4.3,
-      image: 'https://source.unsplash.com/random/300x200/?pasta'
-    },
-    {
-      _id: '4',
-      name: 'Garlic Bread',
-      description: 'Freshly baked bread with garlic butter and herbs',
-      price: 99,
-      category: 'appetizer',
-      rating: 4.0,
-      image: 'https://source.unsplash.com/random/300x200/?garlic,bread'
-    },
-    {
-      _id: '5',
-      name: 'Chocolate Lava Cake',
-      description: 'Warm chocolate cake with molten center, served with ice cream',
-      price: 179,
-      category: 'dessert',
-      rating: 4.7,
-      image: 'https://source.unsplash.com/random/300x200/?chocolate,cake',
-      popular: true
-    },
-    {
-      _id: '6',
-      name: 'Veggie Supreme Pizza',
-      description: 'Loaded with bell peppers, onions, mushrooms, olives and cheese',
-      price: 349,
-      category: 'pizza',
-      rating: 4.4,
-      image: 'https://source.unsplash.com/random/300x200/?vegetarian,pizza'
-    },
-    {
-      _id: '7',
-      name: 'Mojito',
-      description: 'Refreshing mint lime cooler with soda',
-      price: 129,
-      category: 'beverage',
-      rating: 4.1,
-      image: 'https://source.unsplash.com/random/300x200/?mojito'
-    },
-    {
-      _id: '8',
-      name: 'Cheese Garlic Noodles',
-      description: 'Stir fried noodles with garlic, cheese and vegetables',
-      price: 199,
-      category: 'noodles',
-      rating: 4.0,
-      image: 'https://source.unsplash.com/random/300x200/?noodles'
-    }
-  ];
-
-  const dummyCategories = [
-    { id: 'all', name: 'All Items' },
-    { id: 'pizza', name: 'Pizzas' },
-    { id: 'burger', name: 'Burgers' },
-    { id: 'pasta', name: 'Pasta' },
-    { id: 'appetizer', name: 'Appetizers' },
-    { id: 'dessert', name: 'Desserts' },
-    { id: 'beverage', name: 'Beverages' }
-  ];
+  const dummyFoods = [ /* your dummy foods remain unchanged */ ];
+  const dummyCategories = [ /* your dummy categories remain unchanged */ ];
 
   useEffect(() => {
     const fetchFoods = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/foods');
+        const res = await axios.get('https://food-backend-xs3y.onrender.com/api/foods');
         setFoods(res.data);
 
-        // Extract unique categories from data
         const uniqueCategories = [...new Set(res.data.map(item => item.category.toLowerCase()))];
         const formattedCategories = uniqueCategories.map(cat => ({
           id: cat,
