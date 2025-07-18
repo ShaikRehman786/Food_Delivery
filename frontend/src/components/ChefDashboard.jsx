@@ -25,7 +25,7 @@ function ChefDashboard() {
 
   const fetchChefFoods = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/foods/chef/${chefId}`, { headers });
+      const res = await axios.get(`https://food-backend-xs3y.onrender.com/api/foods/chef/${chefId}`, { headers });
       setFoods(res.data);
     } catch (err) {
       toast.error('Failed to load your food items');
@@ -51,11 +51,13 @@ function ChefDashboard() {
 
     try {
       if (editId) {
-        await axios.put(`http://localhost:5000/api/foods/${editId}`, formData, { headers });
+        await axios.put(`https://food-backend-xs3y.onrender.com/api/foods/${editId}`, formData, { headers });
+
         toast.success('Item updated!');
         setEditId(null);
       } else {
-        await axios.post('http://localhost:5000/api/foods', formData, { headers });
+        await axios.post('https://food-backend-xs3y.onrender.com/api/foods', formData, { headers });
+
         toast.success('Item added!');
       }
 
@@ -80,7 +82,8 @@ function ChefDashboard() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this item?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/foods/${id}`, { headers });
+      await axios.delete(`https://food-backend-xs3y.onrender.com/api/foods/${id}`, { headers });
+
       toast.success('Item deleted');
       setFoods(foods.filter(item => item._id !== id));
     } catch (err) {
