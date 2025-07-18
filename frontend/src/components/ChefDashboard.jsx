@@ -4,6 +4,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './css/ChefDashboard.css';
 
+const API_BASE = process.env.REACT_APP_BACKEND_URL;
+
 function ChefDashboard() {
   const [foods, setFoods] = useState([]);
   const [formData, setFormData] = useState({
@@ -25,7 +27,7 @@ function ChefDashboard() {
 
   const fetchChefFoods = async () => {
     try {
-      const res = await axios.get(`https://food-backend-xs3y.onrender.com/api/foods/chef/${chefId}`, { headers });
+      const res = await axios.get(`${API_BASE}/api/foods/chef/${chefId}`, { headers });
       setFoods(res.data);
     } catch (err) {
       toast.error('Failed to load your food items');
@@ -51,12 +53,12 @@ function ChefDashboard() {
 
     try {
       if (editId) {
-        await axios.put(`https://food-backend-xs3y.onrender.com/api/foods/${editId}`, formData, { headers });
+        await axios.put(`${API_BASE}/api/foods/${editId}`, formData, { headers });
 
         toast.success('Item updated!');
         setEditId(null);
       } else {
-        await axios.post('https://food-backend-xs3y.onrender.com/api/foods', formData, { headers });
+        await axios.post(`${API_BASE}/api/foods`, formData, { headers });
 
         toast.success('Item added!');
       }
@@ -82,7 +84,7 @@ function ChefDashboard() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this item?')) return;
     try {
-      await axios.delete(`https://food-backend-xs3y.onrender.com/api/foods/${id}`, { headers });
+      await axios.delete(`${API_BASE}/api/foods/${id}`, { headers });
 
       toast.success('Item deleted');
       setFoods(foods.filter(item => item._id !== id));
