@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
+import { toast } from 'react-toastify';  // ✅ Import toast
 
 function Navbar() {
   const navigate = useNavigate();
@@ -8,6 +9,8 @@ function Navbar() {
   const isLoggedIn = !!localStorage.getItem('token');
 
   const handleLogout = () => {
+    toast.dismiss();             
+    toast.clearWaitingQueue();   
     localStorage.clear();
     navigate('/login');
   };
@@ -15,13 +18,11 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        {/* Brand (always shows) */}
-        <Link to="/" className="navbar-brand">🍽️ Food App</Link>
+        <Link to="/home" className="navbar-brand">🍽️ Food App</Link>
       </div>
 
       <div className="navbar-links">
-        {/* Home link on right side */}
-        <Link to="/" className="navbar-home-btn">Home</Link>
+        <Link to="/home" className="navbar-home-btn">Home</Link>
 
         {!isLoggedIn ? (
           <>

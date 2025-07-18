@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import './css/AdminDashboard.css';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const API_BASE = 'http://localhost:5000';
 
@@ -11,16 +11,22 @@ const AdminDashboard = () => {
   const [chefs, setChefs] = useState([]);
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const hasRedirected = useRef(false);
 
   useEffect(() => {
     let isMounted = true;
     const token = localStorage.getItem('token');
-    if (!token) {
+
+    if (!token && !hasRedirected.current && location.pathname === '/admin') {
+      hasRedirected.current = true;
       toast.dismiss();
       toast.clearWaitingQueue();
-      toast.error('Please login as admin');
-      navigate('/login');
-      return; // Prevent further execution
+      toast.error('Please login as admin', {
+        autoClose: 1500,
+        onClose: () => navigate('/login'),
+      });
+      return;
     }
 
     const fetchData = async () => {
@@ -47,9 +53,9 @@ const AdminDashboard = () => {
     fetchData();
 
     return () => {
-      isMounted = false; // Cleanup on unmount
+      isMounted = false;
     };
-  }, [navigate]);
+  }, [navigate, location.pathname]);
 
   const getAuthConfig = () => {
     const token = localStorage.getItem('token');

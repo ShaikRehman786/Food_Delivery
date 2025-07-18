@@ -4,6 +4,7 @@
   align-items: center;
   background-color: #282c34;
   padding: 12px 24px;
+  
   color: white;
   
 }
@@ -29,4 +30,22 @@
 .logout-btn:hover,
 .navbar-links a:hover {
   text-decoration: underline;
+}
+
+
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.dashboard-layout {
+  margin-top: 56px; /* adjust to navbar height */
 }

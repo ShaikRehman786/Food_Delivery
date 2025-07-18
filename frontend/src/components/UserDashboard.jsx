@@ -1,104 +1,73 @@
-import React, { useEffect, useState, useRef } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import { useUser } from './UserContext';
 import './css/UserDashboard.css';
-import { toast } from 'react-toastify';
-
-const API_BASE = 'http://localhost:5000'; // Update with your backend base URL
 
 function UserDashboard() {
-  const [userDetails, setUserDetails] = useState(null);
-  const [orders, setOrders] = useState([]);
-  const hasFetched = useRef(false);
-
-  const token = localStorage.getItem('token');
-  const userId = localStorage.getItem('userId');
-
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
+  const { username } = useUser();
+  const location = useLocation();
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
-    if (!token || !userId) {
-      toast.error('Not logged in. Please login again.');
-      return;
-    }
-
-    if (hasFetched.current) return;
-    hasFetched.current = true;
-
-    console.log("✅ Token:", token);
-    console.log("✅ User ID:", userId);
-
-    fetchUserDetails();
-    fetchOrderHistory();
+    const timer = setInterval(() => setCurrentTime(new Date()), 60000);
+    return () => clearInterval(timer);
   }, []);
 
-  const fetchUserDetails = async () => {
-    try {
-      const res = await axios.get(`${API_BASE}/api/users/${userId}`, { headers });
-      console.log("👤 User Details:", res.data);
-      setUserDetails(res.data);
-    } catch (error) {
-      console.error('❌ Failed to fetch user details:', error.response?.data || error.message);
-      toast.error('Error loading user details');
-    }
-  };
+  const formatDate = (date) =>
+    date.toLocaleDateString(undefined, {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
 
-  const fetchOrderHistory = async () => {
-    try {
-      const res = await axios.get(`${API_BASE}/api/orders/user/${userId}`, { headers });
-      console.log("📦 Order History:", res.data);
-      setOrders(res.data);
-    } catch (error) {
-      console.error('❌ Failed to fetch order history:', error.response?.data || error.message);
-      toast.error('Error loading order history');
-    }
-  };
+  const formatTime = (date) =>
+    date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+
+  // ✅ Check if current route is cart
+  const isCartPage = location.pathname.includes('/user/cart');
 
   return (
-    <div className="user-dashboard">
-      <h2>User Dashboard</h2>
-
-      {/* USER INFO */}
-      {userDetails ? (
-        <div className="user-info">
-          <img
-            src={userDetails.profileImage || '/default-avatar.png'}
-            alt="User"
-            className="user-profile-img"
-          />
-          <div className="user-details-text">
-            <p><strong>Name:</strong> {userDetails.name}</p>
-            <p><strong>Email:</strong> {userDetails.email}</p>
-            <p><strong>Phone:</strong> {userDetails.phone || 'N/A'}</p>
-            <p><strong>Address:</strong> {userDetails.address || 'N/A'}</p>
-            <p><strong>Joined:</strong> {new Date(userDetails.createdAt).toLocaleDateString()}</p>
-            <p><strong>Last Login:</strong> {userDetails.lastLogin ? new Date(userDetails.lastLogin).toLocaleString() : 'N/A'}</p>
+    <div className="dashboard-layout">
+      <aside className="sidebar">
+        {!isCartPage && (
+          <div className="greeting" style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+            <h2>Hello, {username || 'Guest'}!</h2>
+            <p>{formatDate(currentTime)}</p>
+            <p>Current time: {formatTime(currentTime)}</p>
           </div>
-        </div>
-      ) : (
-        <p>Loading user info...</p>
-      )}
-
-      {/* ORDER HISTORY */}
-      <div className="order-history">
-        <h3>Order History</h3>
-        {orders.length === 0 ? (
-          <p>No orders found.</p>
-        ) : (
-          <ul className="order-list">
-            {orders.map((order) => (
-              <li key={order._id} className="order-item">
-                <p><strong>Order ID:</strong> {order._id}</p>
-                <p><strong>Items:</strong> {order.items.map(i => i.name).join(', ')}</p>
-                <p><strong>Total:</strong> ₹{order.total}</p>
-                <p><strong>Status:</strong> {order.status}</p>
-                <p><strong>Ordered At:</strong> {new Date(order.createdAt).toLocaleString()}</p>
-              </li>
-            ))}
-          </ul>
         )}
-      </div>
+
+        <ul>
+          <li><Link to="/user/dashboard">Dashboard</Link></li>
+          <li><Link to="/user/orders">Orders</Link></li>
+          <li><Link to="/user/profile">Profile</Link></li>
+          <li><Link to="/user/settings">Settings</Link></li>
+        </ul>
+      </aside>
+
+      <main className="main-content">
+        {!isCartPage && (
+          <div className="centered-message">
+            <h2>Welcome back, {username || 'Guest'}!</h2>
+            <p>{formatDate(currentTime)}</p>
+            <p>Current time: {formatTime(currentTime)}</p>
+            <p className="welcome-message">
+              {`Hope you're having a great day, ${username || 'Guest'}! Let's get started.`}
+            </p>
+          </div>
+        )}
+        <Outlet />
+      </main>
+
+      {!isCartPage && (
+        <aside className="helpdesk">
+          <h3>Helpdesk</h3>
+          <img src="/helpdesk-icon.png" alt="Helpdesk" />
+          <p>Contact: +91 9701765821</p>
+          <p>Email: support@example.com</p>
+        </aside>
+      )}
     </div>
   );
 }

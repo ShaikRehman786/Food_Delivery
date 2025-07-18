@@ -113,7 +113,7 @@ function ChefDashboard() {
                 <img src={item.image} alt={item.name} />
                 <h4>{item.name}</h4>
                 <p>{item.description}</p>
-                <p><strong>Price:</strong> ${item.price}</p>
+                <p><strong>Price:</strong> ₹{item.price}</p>
                 <p><strong>Category:</strong> {item.category}</p>
                 <button onClick={() => handleEditClick(item)}>Edit</button>
                 <button onClick={() => handleDelete(item._id)}>Delete</button>

@@ -9,7 +9,6 @@ const Home = () => {
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState('all');
 
-  // Dummy data for fallback
   const dummyFoods = [
     {
       _id: '1',
@@ -104,15 +103,15 @@ const Home = () => {
         const res = await axios.get('http://localhost:5000/api/foods');
         setFoods(res.data);
 
-        // Extract categories dynamically
-        const uniqueCategories = [...new Set(res.data.map(item => item.category))];
+        // Extract unique categories from data
+        const uniqueCategories = [...new Set(res.data.map(item => item.category.toLowerCase()))];
         const formattedCategories = uniqueCategories.map(cat => ({
-          id: cat.toLowerCase(),
+          id: cat,
           name: `${cat.charAt(0).toUpperCase()}${cat.slice(1)}`
         }));
         setCategories([{ id: 'all', name: 'All Items' }, ...formattedCategories]);
       } catch (err) {
-        console.log('Using dummy data due to API error:', err);
+        console.error('API error, using dummy data:', err);
         setFoods(dummyFoods);
         setCategories(dummyCategories);
       } finally {
@@ -125,7 +124,6 @@ const Home = () => {
 
   const addToCart = (food) => {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
     const existingItem = cart.find(item => item._id === food._id);
 
     if (existingItem) {
@@ -140,9 +138,10 @@ const Home = () => {
     alert(`${food.name} added to cart!`);
   };
 
-  const filteredFoods = activeCategory === 'all' 
-    ? foods 
-    : foods.filter(food => food.category === activeCategory);
+  const filteredFoods =
+    activeCategory === 'all'
+      ? foods
+      : foods.filter(food => food.category.toLowerCase() === activeCategory);
 
   return (
     <div className="home-container">
@@ -178,9 +177,9 @@ const Home = () => {
               <div key={food._id} className="food-card">
                 {food.popular && <span className="popular-badge">Popular</span>}
                 <div className="food-image-container">
-                  <img 
-                    src={food.image || 'https://source.unsplash.com/random/300x200/?food'} 
-                    alt={food.name} 
+                  <img
+                    src={food.image || 'https://source.unsplash.com/random/300x200/?food'}
+                    alt={food.name}
                     className="food-image"
                   />
                 </div>
@@ -195,7 +194,7 @@ const Home = () => {
                   <p className="food-description">{food.description}</p>
                   <div className="food-footer">
                     <span className="food-price">₹{food.price}</span>
-                    <button 
+                    <button
                       className="add-to-cart-btn"
                       onClick={() => addToCart(food)}
                     >
